@@ -34,18 +34,25 @@ public class LoginUseCase implements ILoginUseCase {
         User user = this.userRepositoryService.getUserByUsername(loginRequest.getRequestUsername())
                 .orElseThrow(new DomainClientException(DomainErrorResponse.USER_DOES_NOT_EXIST));
 
+        checkUserIsAvailable(user);
+
         this.authenticationService.authenticateCredentials(user, loginRequest);
 
         String token = this.tokenService.create(
                 Map.of(
                         "userId", user.getId(),
                         "ip", loginRequest.getIp(),
-                        "role", user.getRole().name()
+                        "role", user.getRole()
                 ));
 
         logger.info(SUCCESSFUL_LOGIN_MESSAGE_TEMPLATE, loginRequest.getRequestUsername());
 
         return new LoginResponse(token);
+    }
 
+    private void checkUserIsAvailable(User user) throws DomainClientException {
+        if (this.authenticationService.isLoginLocked(user)) {
+            throw new DomainClientException(DomainErrorResponse.TOO_MANY_LOGIN_ATTEMPTS);
+        }
     }
 }

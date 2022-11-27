@@ -63,7 +63,7 @@ class LoginUseCaseTest {
         when(this.tokenService.create(Map.of(
                 "userId", USER_ID,
                 "ip", USER_IP,
-                "role", ROOT.name()
+                "role", ROOT
         ))).thenReturn(ACCESS_TOKEN);
     }
 
@@ -143,10 +143,30 @@ class LoginUseCaseTest {
         verify(tokenService, never()).create(any());
     }
 
+
+    @Test
+    void givenValidPasswordAndLockedLogin_whenLogin_thenThrowDomainClientExceptionDueToTooManyLoginAttempts() throws DomainClientException {
+        givenExistentUser();
+        givenLoginAlreadyLocked();
+        givenValidCredentials();
+
+        assertThatExceptionOfType(DomainClientException.class)
+                .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
+                .withMessage(DomainErrorResponse.TOO_MANY_LOGIN_ATTEMPTS.getMessage());
+
+        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(authenticationService, never()).authenticateCredentials(this.user, this.loginRequest);
+        verify(tokenService, never()).create(any());
+    }
+
     private void givenLoginLockedByCurrentInvalidPassword() throws DomainClientException {
         doThrow(new DomainClientException(DomainErrorResponse.TOO_MANY_LOGIN_ATTEMPTS))
                 .when(authenticationService)
                 .authenticateCredentials(this.user, this.loginRequest);
+    }
+
+    private void givenLoginAlreadyLocked() throws DomainClientException {
+        when(authenticationService.isLoginLocked(this.user)).thenReturn(true);
     }
 
     private void givenInvalidPassword() throws DomainClientException {

@@ -26,7 +26,8 @@ enum HttpAdapterErrorResponse {
             HttpStatus.UNPROCESSABLE_ENTITY,
             List.of(
                     DomainErrorResponse.MALFORMED_USERNAME,
-                    DomainErrorResponse.MALFORMED_PASSWORD
+                    DomainErrorResponse.MALFORMED_PASSWORD,
+                    DomainErrorResponse.USERNAME_DOES_NOT_MATCH
             ),
             "Malformed expected data."
     ),

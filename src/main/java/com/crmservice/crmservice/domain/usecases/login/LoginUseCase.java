@@ -32,7 +32,7 @@ public class LoginUseCase implements ILoginUseCase {
     public LoginResponse login(LoginRequest loginRequest) throws DomainClientException {
 
         User user = this.userRepositoryService.getUserByUsername(loginRequest.getRequestUsername())
-                .orElseThrow(new DomainClientException(DomainErrorResponse.USER_DOES_NOT_EXIST));
+                .orElseThrow(new DomainClientException(DomainErrorResponse.USERNAME_DOES_NOT_MATCH));
 
         checkUserIsAvailable(user);
 

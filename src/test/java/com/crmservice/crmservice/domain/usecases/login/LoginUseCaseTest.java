@@ -34,10 +34,6 @@ class LoginUseCaseTest {
     private static final String USER_IP = "127.0.0.0";
     private static final String USERNAME = "username";
     private static final String USER_ENCODED_PASSWORD = "userEncodedPassword";
-    private static final String USERNAME_PASSWORD = MessageFormat.format("{0}:{1}",
-            USERNAME,
-            USER_ENCODED_PASSWORD);
-    private static final String AUTHENTICATION_TOKEN = Base64.getEncoder().encodeToString(USERNAME_PASSWORD.getBytes());
     private static final String ACCESS_TOKEN = "accessToken";
 
     private ILoginUseCase loginUseCase;
@@ -51,13 +47,13 @@ class LoginUseCaseTest {
     private ITokenService tokenService;
 
     @BeforeEach
-    void setUp() throws DomainClientException {
+    void setUp() {
         this.loginUseCase = new LoginUseCase(
                 userRepositoryService,
                 authenticationService,
                 tokenService);
 
-        this.loginRequest = new LoginRequest(AUTHENTICATION_TOKEN, USER_IP);
+        this.loginRequest = new LoginRequest(USERNAME, USER_ENCODED_PASSWORD, USER_IP);
         this.user = new User(USER_ID, USERNAME, USER_ENCODED_PASSWORD, ROOT);
 
         when(this.tokenService.create(Map.of(

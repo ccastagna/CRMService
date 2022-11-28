@@ -30,10 +30,6 @@ class AuthenticationServiceTest {
     private static final String USER_IP = "127.0.0.0";
     private static final String USERNAME = "username";
     private static final String ENCODED_PASSWORD = "userEncodedPassword";
-    private static final String NAME_PASSWORD = MessageFormat.format("{0}:{1}",
-            USERNAME,
-            ENCODED_PASSWORD);
-    private static final String AUTHENTICATION_TOKEN = Base64.getEncoder().encodeToString(NAME_PASSWORD.getBytes());
     private static final String INVALID_CREDENTIALS_EVENT = "invalid-credentials";
 
     private User user;
@@ -48,10 +44,10 @@ class AuthenticationServiceTest {
 
 
     @BeforeEach
-    void setUp() throws DomainClientException {
+    void setUp() {
         this.authenticationService = new AuthenticationService(userCredentialsValidator, attemptsCounter);
         this.user = new User(USER_ID, USERNAME, ENCODED_PASSWORD, Role.ROOT);
-        this.loginRequest = new LoginRequest(AUTHENTICATION_TOKEN, USER_IP);
+        this.loginRequest = new LoginRequest(USERNAME, ENCODED_PASSWORD, USER_IP);
     }
 
     @Test

@@ -8,6 +8,7 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequest
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.LoginRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -24,11 +25,13 @@ public class InfrastructureDriverConfiguration {
     }
 
     @Bean
+    @Qualifier("BasicAuthHeaderHandler")
     IRequestHandler<Void, Void> getBasicAuthorizationHeaderHandler() {
         return new BasicAuthorizationHeaderHandler();
     }
 
     @Bean
+    @Qualifier("IPHeaderHandler")
     IRequestHandler<Void, Void> getIPHeaderHandler() {
         return new IPHeaderHandler();
     }

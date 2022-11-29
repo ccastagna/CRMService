@@ -3,6 +3,7 @@ package com.crmservice.crmservice.infrastructure.drivers.controllers;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,8 @@ public class LoginController {
     private final IRequestHandler<Void, Void> basicAuthenticationHeaderHandler;
 
     public LoginController(
-            IRequestHandler<Void, Void> basicAuthenticationHeaderHandler,
-            IRequestHandler<Void, Void> ipHeaderHandler,
+            @Qualifier("BasicAuthHeaderHandler") IRequestHandler<Void, Void> basicAuthenticationHeaderHandler,
+            @Qualifier("IPHeaderHandler") IRequestHandler<Void, Void> ipHeaderHandler,
             IRequestHandler<Void, LoginResponseDTO> loginRequestHandler
     ) {
         this.basicAuthenticationHeaderHandler = basicAuthenticationHeaderHandler;

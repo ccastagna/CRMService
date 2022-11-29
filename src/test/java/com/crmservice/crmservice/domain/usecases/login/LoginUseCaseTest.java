@@ -104,7 +104,7 @@ class LoginUseCaseTest {
 
         assertThatExceptionOfType(DomainClientException.class)
                 .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
-                .withMessage(DomainErrorResponse.USER_DOES_NOT_EXIST.getMessage());
+                .withMessage(DomainErrorResponse.USERNAME_DOES_NOT_MATCH.getMessage());
 
         verify(userRepositoryService).getUserByUsername(USERNAME);
         verify(authenticationService, never()).authenticateCredentials(this.user, this.loginRequest);

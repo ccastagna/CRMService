@@ -1,9 +1,9 @@
 package com.crmservice.crmservice;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
-@SpringBootTest
+@DataMongoTest
 class CrmserviceApplicationTests {
 
 	@Test

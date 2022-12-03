@@ -3,11 +3,12 @@ package com.crmservice.crmservice.domain.services.credentialsvalidators;
 
 import com.crmservice.crmservice.domain.entities.User;
 import com.crmservice.crmservice.domain.enums.Role;
+import com.crmservice.crmservice.domain.enums.UserState;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@DataMongoTest
 class UserCredentialsValidatorTest {
 
     private static final String ENCODED_PASSWORD = "encodedPassword";
@@ -105,7 +106,7 @@ class UserCredentialsValidatorTest {
         //given
         String validUsername = USERNAME_WITH_254_NON_SPECIAL_CHARACTERS;
         when(userRepositoryService.getUserByUsername(validUsername))
-                .thenReturn(Optional.of(new User(USER_ID, validUsername, ENCODED_PASSWORD, Role.ROOT)));
+                .thenReturn(Optional.of(new User(USER_ID, validUsername, ENCODED_PASSWORD, Role.ROOT, UserState.ACTIVE)));
 
         //when
         boolean validationResult = this.userCredentialsValidator.isUsernameDuplicated(validUsername);

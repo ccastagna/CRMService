@@ -1,6 +1,7 @@
 package com.crmservice.crmservice.domain.usecases.login;
 
 import com.crmservice.crmservice.domain.entities.User;
+import com.crmservice.crmservice.domain.enums.UserState;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
@@ -11,10 +12,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
-import java.text.MessageFormat;
-import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@DataMongoTest
 class LoginUseCaseTest {
     private static final UUID USER_ID = UUID.randomUUID();
     private static final String USER_IP = "127.0.0.0";
@@ -54,7 +53,7 @@ class LoginUseCaseTest {
                 tokenService);
 
         this.loginRequest = new LoginRequest(USERNAME, USER_ENCODED_PASSWORD, USER_IP);
-        this.user = new User(USER_ID, USERNAME, USER_ENCODED_PASSWORD, ROOT);
+        this.user = new User(USER_ID, USERNAME, USER_ENCODED_PASSWORD, ROOT, UserState.ACTIVE);
 
         when(this.tokenService.create(Map.of(
                 "userId", USER_ID,
@@ -73,7 +72,7 @@ class LoginUseCaseTest {
         Assertions.assertThat(useCaseResponse)
                 .isNotNull()
                 .matches(loginResponse ->
-                        ACCESS_TOKEN.equals(loginResponse.getToken()), ACCESS_TOKEN);
+                        ACCESS_TOKEN.equals(loginResponse.token()), ACCESS_TOKEN);
 
         verify(userRepositoryService).getUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);

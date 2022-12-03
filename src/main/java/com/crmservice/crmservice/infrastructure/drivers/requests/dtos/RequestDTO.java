@@ -2,6 +2,7 @@ package com.crmservice.crmservice.infrastructure.drivers.requests.dtos;
 
 import org.springframework.http.RequestEntity;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,7 +11,7 @@ public class RequestDTO<T> {
     private Map<String, String> context;
 
     public RequestDTO(RequestEntity<T> request) {
-        this(request, Map.of());
+        this(request, new HashMap<>());
     }
 
     public RequestDTO(RequestEntity<T> request, Map<String, String> context) {

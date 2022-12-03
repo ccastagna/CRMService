@@ -2,6 +2,7 @@ package com.crmservice.crmservice.domain.services.authentication;
 
 import com.crmservice.crmservice.domain.entities.User;
 import com.crmservice.crmservice.domain.enums.Role;
+import com.crmservice.crmservice.domain.enums.UserState;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.responses.DomainErrorResponse;
 import com.crmservice.crmservice.domain.services.attemptscounter.IAttemptsCounter;
@@ -10,10 +11,8 @@ import com.crmservice.crmservice.domain.usecases.login.LoginRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
-import java.text.MessageFormat;
-import java.util.Base64;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@DataMongoTest
 class AuthenticationServiceTest {
 
     private static final UUID USER_ID = UUID.randomUUID();
@@ -46,7 +45,7 @@ class AuthenticationServiceTest {
     @BeforeEach
     void setUp() {
         this.authenticationService = new AuthenticationService(userCredentialsValidator, attemptsCounter);
-        this.user = new User(USER_ID, USERNAME, ENCODED_PASSWORD, Role.ROOT);
+        this.user = new User(USER_ID, USERNAME, ENCODED_PASSWORD, Role.ROOT, UserState.ACTIVE);
         this.loginRequest = new LoginRequest(USERNAME, ENCODED_PASSWORD, USER_IP);
     }
 

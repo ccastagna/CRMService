@@ -5,6 +5,6 @@ import com.crmservice.crmservice.domain.usecases.login.LoginResponse;
 public record LoginResponseDTO(String token) {
 
     public static LoginResponseDTO from(LoginResponse loginResponse) {
-        return new LoginResponseDTO(loginResponse.getToken());
+        return new LoginResponseDTO(loginResponse.token());
     }
 }

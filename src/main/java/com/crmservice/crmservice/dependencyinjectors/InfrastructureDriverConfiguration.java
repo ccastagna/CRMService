@@ -4,12 +4,14 @@ package com.crmservice.crmservice.dependencyinjectors;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BasicAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BearerAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateUserRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.DeleteUserRequestHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.GetAllUsersRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IPHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.LoginRequestHandler;
@@ -17,6 +19,7 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.UpdateUs
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.UpdateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateUserResponseDTO;
+import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.GetAllUsersResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.UpdateUserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +61,13 @@ public class InfrastructureDriverConfiguration {
             @Autowired IDeleteUserUseCase deleteUserUseCase
     ) {
         return new DeleteUserRequestHandler(deleteUserUseCase);
+    }
+
+    @Bean
+    IRequestHandler<Void, GetAllUsersResponseDTO> getGetAllUsersRequestHandler(
+            @Autowired IGetAllUsersUseCase getAllUsersUseCase
+    ) {
+        return new GetAllUsersRequestHandler(getAllUsersUseCase);
     }
 
     @Bean

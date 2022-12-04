@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class DeleteUserRequestHandler extends BaseRequestHandler<Void, Void> {
 
+    private static final String ROOT_USERNAME = "root";
     private final IDeleteUserUseCase deleteUserUseCase;
 
     private final Logger logger = LoggerFactory.getLogger(DeleteUserRequestHandler.class);
@@ -34,8 +35,8 @@ public class DeleteUserRequestHandler extends BaseRequestHandler<Void, Void> {
             String currentUserUsername = Optional.ofNullable(request.getContext(RequestContextKey.CURRENT_USER))
                     .orElseThrow();
 
-            if(usernameToDelete.equals(currentUserUsername)) {
-                return HttpAdapterResponseBuilder.forbidden("It is forbidden to delete your own user");
+            if(usernameToDelete.equals(currentUserUsername) || usernameToDelete.equals(ROOT_USERNAME)) {
+                return HttpAdapterResponseBuilder.forbidden("It is forbidden to delete the given user");
             }
 
             DeleteUserRequest deleteUserRequest = new DeleteUserRequest(usernameToDelete);

@@ -11,7 +11,9 @@ import com.crmservice.crmservice.domain.services.credentialsvalidators.IUserCred
 import com.crmservice.crmservice.domain.services.credentialsvalidators.UserCredentialsValidator;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.deleteuser.DeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.getallusers.GetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.login.LoginUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
@@ -68,5 +70,10 @@ public class DomainConfiguration {
     @Bean
     IDeleteUserUseCase getDeleteUserUseCase(@Autowired IUserRepositoryService userRepositoryService) {
         return new DeleteUserUseCase(userRepositoryService);
+    }
+
+    @Bean
+    IGetAllUsersUseCase getGetAllUsersUseCase(@Autowired IUserRepositoryService userRepositoryService) {
+        return new GetAllUsersUseCase(userRepositoryService);
     }
 }

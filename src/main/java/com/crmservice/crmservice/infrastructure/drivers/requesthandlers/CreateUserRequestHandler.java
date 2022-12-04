@@ -3,7 +3,7 @@ package com.crmservice.crmservice.infrastructure.drivers.requesthandlers;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserRequest;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserResponse;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ICreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.logs.LogMessageBuilder;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestDTO;
@@ -11,6 +11,7 @@ import com.crmservice.crmservice.infrastructure.drivers.responses.HttpAdapterRes
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateUserResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class CreateUserRequestHandler extends BaseRequestHandler<CreateUserReque
 
             CreateUserResponse createUserResponse = this.createUserUseCase.createUser(createUserRequest);
 
-            response = ResponseEntity.ok()
+            response = ResponseEntity.status(HttpStatus.CREATED)
                     .body(CreateUserResponseDTO.from(createUserResponse));
 
         } catch (SecurityException ex) {

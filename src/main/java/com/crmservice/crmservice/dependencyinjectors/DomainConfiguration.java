@@ -3,7 +3,6 @@ package com.crmservice.crmservice.dependencyinjectors;
 import com.crmservice.crmservice.domain.interfaces.ICounterRepositoryService;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
-import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.services.attemptscounter.AttemptsCounter;
 import com.crmservice.crmservice.domain.services.attemptscounter.IAttemptsCounter;
 import com.crmservice.crmservice.domain.services.authentication.AuthenticationService;
@@ -11,9 +10,11 @@ import com.crmservice.crmservice.domain.services.authentication.IAuthenticationS
 import com.crmservice.crmservice.domain.services.credentialsvalidators.IUserCredentialsValidator;
 import com.crmservice.crmservice.domain.services.credentialsvalidators.UserCredentialsValidator;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.deleteuser.DeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.login.LoginUseCase;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ICreateUserUseCase;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,5 +54,10 @@ public class DomainConfiguration {
                                             @Autowired PasswordEncoder passwordEncoder,
                                             @Autowired IUserRepositoryService userRepositoryService) {
         return new CreateUserUseCase(userCredentialsValidator, passwordEncoder, userRepositoryService);
+    }
+
+    @Bean
+    IDeleteUserUseCase getDeleteUserUseCase(@Autowired IUserRepositoryService userRepositoryService) {
+        return new DeleteUserUseCase(userRepositoryService);
     }
 }

@@ -7,7 +7,7 @@ import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.responses.DomainErrorResponse;
 import com.crmservice.crmservice.domain.services.authentication.IAuthenticationService;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,6 +56,7 @@ class LoginUseCaseTest {
         this.user = new User(USER_ID, USERNAME, USER_ENCODED_PASSWORD, ROOT, UserState.ACTIVE);
 
         when(this.tokenService.create(Map.of(
+                "username", USERNAME,
                 "ip", USER_IP,
                 "role", ROOT
         ))).thenReturn(ACCESS_TOKEN);
@@ -76,6 +77,7 @@ class LoginUseCaseTest {
         verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService).create(Map.of(
+                "username", USERNAME,
                 "ip", USER_IP,
                 "role", ROOT));
     }

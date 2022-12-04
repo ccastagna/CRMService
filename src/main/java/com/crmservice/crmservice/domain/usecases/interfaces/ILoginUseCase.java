@@ -1,4 +1,4 @@
-package com.crmservice.crmservice.infrastructure.drivers.interfaces;
+package com.crmservice.crmservice.domain.usecases.interfaces;
 
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.usecases.login.LoginRequest;

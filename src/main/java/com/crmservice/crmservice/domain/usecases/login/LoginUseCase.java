@@ -6,7 +6,7 @@ import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.responses.DomainErrorResponse;
 import com.crmservice.crmservice.domain.services.authentication.IAuthenticationService;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +40,7 @@ public class LoginUseCase implements ILoginUseCase {
 
         String token = this.tokenService.create(
                 Map.of(
+                        "username", user.getUsername(),
                         "ip", loginRequest.getIp(),
                         "role", user.getRole()
                 ));

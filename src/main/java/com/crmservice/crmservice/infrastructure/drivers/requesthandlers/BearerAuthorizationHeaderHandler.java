@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.CURRENT_USER;
 import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_IP;
 import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.USE_CASE;
 
@@ -38,22 +39,16 @@ public class BearerAuthorizationHeaderHandler<T, R> extends BaseRequestHandler<T
         ResponseEntity response;
 
         try {
-            String authorizationToken = parseBearerAuthorizationHeader(getAuthorizationHeader(request));
+            Paseto paseto = parsePasetoToken(request);
 
-            Map<String, String> claimsRequired = Map.of("ip", request.getContext(REQUEST_IP));
+            validateUserPermissions(request, paseto);
 
-            Paseto paseto = this.tokenService.validate(authorizationToken, claimsRequired);
+            String currentUserUsername = getCurrentUserUsernameFrom(paseto);
 
-            Role userRole = Optional.of(paseto.getClaims().get("role", String.class))
-                    .map(Role::valueOf)
-                    .orElseThrow();
-            UseCase currentUseCase = Optional.of(request.getContext(USE_CASE))
-                    .map(UseCase::valueOf)
-                    .orElseThrow();
-
-            validatePermissions(userRole, currentUseCase);
+            request.setContext(CURRENT_USER, currentUserUsername);
 
             response = super.handle(request);
+
         } catch (SecurityException ex) {
             response = HttpAdapterResponseBuilder.unauthorizedToken();
             logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));
@@ -64,6 +59,36 @@ public class BearerAuthorizationHeaderHandler<T, R> extends BaseRequestHandler<T
         }
 
         return response;
+    }
+
+    private String getCurrentUserUsernameFrom(Paseto paseto) {
+        return Optional.of(paseto.getClaims().get("username", String.class)).orElseThrow();
+    }
+
+    private void validateUserPermissions(RequestDTO<T> request, Paseto paseto) {
+        Role userRole = getRole(paseto);
+        UseCase currentUseCase = getCurrentUseCase(request);
+        validatePermissions(userRole, currentUseCase);
+    }
+
+    private Paseto parsePasetoToken(RequestDTO<T> request) {
+        String authorizationToken = parseBearerAuthorizationHeader(getAuthorizationHeader(request));
+
+        Map<String, String> claimsRequired = Map.of("ip", request.getContext(REQUEST_IP));
+        Paseto paseto = this.tokenService.validate(authorizationToken, claimsRequired);
+        return paseto;
+    }
+
+    private UseCase getCurrentUseCase(RequestDTO<T> request) {
+        return Optional.of(request.getContext(USE_CASE))
+                .map(UseCase::valueOf)
+                .orElseThrow();
+    }
+
+    private Role getRole(Paseto paseto) {
+        return Optional.of(paseto.getClaims().get("role", String.class))
+                .map(Role::valueOf)
+                .orElseThrow();
     }
 
     private void validatePermissions(Role role, UseCase useCase) {

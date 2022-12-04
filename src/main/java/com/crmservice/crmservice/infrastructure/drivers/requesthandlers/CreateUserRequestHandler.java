@@ -3,7 +3,7 @@ package com.crmservice.crmservice.infrastructure.drivers.requesthandlers;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserRequest;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserResponse;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ICreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.logs.LogMessageBuilder;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestDTO;

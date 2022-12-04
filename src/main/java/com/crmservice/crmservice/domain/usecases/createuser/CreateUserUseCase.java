@@ -5,7 +5,7 @@ import com.crmservice.crmservice.domain.enums.Role;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.services.credentialsvalidators.IUserCredentialsValidator;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ICreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;

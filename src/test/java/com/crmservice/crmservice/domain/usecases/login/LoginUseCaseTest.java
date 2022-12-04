@@ -7,7 +7,7 @@ import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.responses.DomainErrorResponse;
 import com.crmservice.crmservice.domain.services.authentication.IAuthenticationService;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

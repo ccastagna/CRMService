@@ -2,8 +2,8 @@ package com.crmservice.crmservice.dependencyinjectors;
 
 
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ICreateUserUseCase;
-import com.crmservice.crmservice.infrastructure.drivers.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BasicAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BearerAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateUserRequestHandler;

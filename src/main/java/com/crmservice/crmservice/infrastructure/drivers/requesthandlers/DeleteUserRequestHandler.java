@@ -31,14 +31,18 @@ public class DeleteUserRequestHandler extends BaseRequestHandler<Void, Void> {
         try {
             String usernameToDelete = Optional.ofNullable(request.getContext(RequestContextKey.USERNAME_TO_DELETE))
                     .orElseThrow();
-            String currentUser = Optional.ofNullable(request.getContext(RequestContextKey.CURRENT_USER))
+            String currentUserUsername = Optional.ofNullable(request.getContext(RequestContextKey.CURRENT_USER))
                     .orElseThrow();
 
-            DeleteUserRequest deleteUserRequest = new DeleteUserRequest(currentUser, usernameToDelete);
+            if(usernameToDelete.equals(currentUserUsername)) {
+                return HttpAdapterResponseBuilder.forbidden("It is forbidden to delete your own user");
+            }
+
+            DeleteUserRequest deleteUserRequest = new DeleteUserRequest(currentUserUsername, usernameToDelete);
 
             this.deleteUserUseCase.deleteUser(deleteUserRequest);
 
-            response = ResponseEntity.noContent().build();
+            response = HttpAdapterResponseBuilder.noContent();
 
         } catch (DomainClientException ex) {
             response = HttpAdapterResponseBuilder.fromDomainException(ex);

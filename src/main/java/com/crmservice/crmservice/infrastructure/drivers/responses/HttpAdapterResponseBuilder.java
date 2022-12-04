@@ -49,5 +49,10 @@ public class HttpAdapterResponseBuilder {
                 .body(message);
     }
 
+    public static ResponseEntity forbidden(String message) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(message);
+    }
+
 
 }

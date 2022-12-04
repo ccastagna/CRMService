@@ -8,4 +8,6 @@ public interface IUserRepositoryService {
     Optional<User> getActiveUserByUsername(String requestUsername);
 
     User createUser(User newUser);
+
+    void deleteUser(User userToDelete, String currentUserUsername);
 }

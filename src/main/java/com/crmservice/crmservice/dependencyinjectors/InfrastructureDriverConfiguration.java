@@ -5,6 +5,7 @@ import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BasicAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BearerAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateUserRequestHandler;
@@ -12,9 +13,12 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.DeleteUs
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IPHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.LoginRequestHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.UpdateUserRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateUserRequestDTO;
+import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.UpdateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateUserResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
+import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.UpdateUserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +43,13 @@ public class InfrastructureDriverConfiguration {
             @Autowired ICreateUserUseCase createUserUseCase
     ) {
         return new CreateUserRequestHandler(createUserUseCase);
+    }
+
+    @Bean
+    IRequestHandler<UpdateUserRequestDTO, UpdateUserResponseDTO> getUpdateUserRequestHandler(
+            @Autowired IUpdateUserUseCase updateUserUseCase
+    ) {
+        return new UpdateUserRequestHandler(updateUserUseCase);
     }
 
     @Bean

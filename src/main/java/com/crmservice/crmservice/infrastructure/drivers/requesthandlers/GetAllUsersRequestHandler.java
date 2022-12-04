@@ -35,10 +35,6 @@ public class GetAllUsersRequestHandler extends BaseRequestHandler<Void, GetAllUs
             response = ResponseEntity.ok()
                     .body(GetAllUsersResponseDTO.from(getAllUsersResponse));
 
-        } catch (DomainClientException ex) {
-            response = HttpAdapterResponseBuilder.fromDomainException(ex);
-            logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));
-
         } catch (Exception ex) {
             response = HttpAdapterResponseBuilder.internalServerError();
             logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));

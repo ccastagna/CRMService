@@ -21,4 +21,8 @@ public record UserRepositoryDTO(UUID id, @Indexed String username, String passwo
     public User toEntity() {
         return new User(id, username, password, role, state);
     }
+
+    public Boolean isActive() {
+        return this.state == UserState.ACTIVE;
+    }
 }

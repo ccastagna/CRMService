@@ -4,12 +4,14 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequest
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Scope("prototype")
 public class LoginController {
 
     private final IRequestHandler<Void, Void> basicAuthenticationHeaderHandler;
@@ -20,6 +22,7 @@ public class LoginController {
             IRequestHandler<Void, LoginResponseDTO> loginRequestHandler
     ) {
         this.basicAuthenticationHeaderHandler = basicAuthenticationHeaderHandler;
+        // TODO: improve chain of responsability to be stateless
         this.basicAuthenticationHeaderHandler
                 .setNext(ipHeaderHandler)
                 .setNext(loginRequestHandler);

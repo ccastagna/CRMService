@@ -10,13 +10,16 @@ import org.springframework.http.ResponseEntity;
 import java.util.Base64;
 import java.util.List;
 
-public class BasicAuthorizationHeaderHandler extends BaseRequestHandler<Void, Void> {
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_PASSWORD;
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_USERNAME;
+
+public class BasicAuthorizationHeaderHandler<T, R> extends BaseRequestHandler<T, R> {
 
     private final Logger logger = LoggerFactory.getLogger(BasicAuthorizationHeaderHandler.class);
     private static final String BASIC_AUTHORIZATION_TYPE = "Basic";
 
     @Override
-    public ResponseEntity<Void> handle(RequestDTO<Void> request) {
+    public ResponseEntity<R> handle(RequestDTO<T> request) {
 
         ResponseEntity response;
 
@@ -30,20 +33,24 @@ public class BasicAuthorizationHeaderHandler extends BaseRequestHandler<Void, Vo
                 return HttpAdapterResponseBuilder.malformedExpectedData();
             }
 
-            request.setContext("requestUsername", credentials[0]);
-            request.setContext("requestPassword", credentials[1]);
+            request.setContext(REQUEST_USERNAME, credentials[0]);
+            request.setContext(REQUEST_PASSWORD, credentials[1]);
 
             response = super.handle(request);
 
         } catch (SecurityException ex) {
             response = HttpAdapterResponseBuilder.malformedExpectedData();
             logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));
+
+        } catch (Exception ex) {
+            response = HttpAdapterResponseBuilder.internalServerError();
+            logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));
         }
 
         return response;
     }
 
-    private List<String> getAuthorizationHeader(RequestDTO<Void> request) {
+    private List<String> getAuthorizationHeader(RequestDTO<T> request) {
         return request.getRequestEntity().getHeaders().get("Authorization");
     }
 

@@ -1,11 +1,17 @@
 package com.crmservice.crmservice.dependencyinjectors;
 
 
+import com.crmservice.crmservice.domain.interfaces.ITokenService;
+import com.crmservice.crmservice.infrastructure.drivers.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.interfaces.ILoginUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BasicAuthorizationHeaderHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BearerAuthorizationHeaderHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateUserRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IPHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.LoginRequestHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateUserRequestDTO;
+import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateUserResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,9 +33,22 @@ public class InfrastructureDriverConfiguration {
     }
 
     @Bean
+    IRequestHandler<CreateUserRequestDTO, CreateUserResponseDTO> getCreateUserRequestHandler(
+            @Autowired ICreateUserUseCase createUserUseCase
+    ) {
+        return new CreateUserRequestHandler(createUserUseCase);
+    }
+
+    @Bean
     @Qualifier("BasicAuthHeaderHandler")
     IRequestHandler<Void, Void> getBasicAuthorizationHeaderHandler() {
         return new BasicAuthorizationHeaderHandler();
+    }
+
+    @Bean
+    @Qualifier("BearerAuthHeaderHandler")
+    IRequestHandler<Void, Void> getBearerAuthorizationHeaderHandler(@Autowired ITokenService tokenService) {
+        return new BearerAuthorizationHeaderHandler(tokenService);
     }
 
     @Bean

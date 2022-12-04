@@ -13,7 +13,9 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IPHeaderHandler extends BaseRequestHandler<Void, Void> {
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_IP;
+
+public class IPHeaderHandler<T, R> extends BaseRequestHandler<T, R> {
 
     private final Logger logger = LoggerFactory.getLogger(IPHeaderHandler.class);
     private static final String IPV4_REGEX =
@@ -25,7 +27,7 @@ public class IPHeaderHandler extends BaseRequestHandler<Void, Void> {
     private static final Pattern IPv4_PATTERN = Pattern.compile(IPV4_REGEX);
 
     @Override
-    public ResponseEntity<Void> handle(RequestDTO<Void> request) {
+    public ResponseEntity<R> handle(RequestDTO<T> request) {
 
         ResponseEntity response;
 
@@ -38,7 +40,7 @@ public class IPHeaderHandler extends BaseRequestHandler<Void, Void> {
                 return HttpAdapterResponseBuilder.badRequest(message);
             }
 
-            request.setContext("requestIP", ip);
+            request.setContext(REQUEST_IP, ip);
 
             response = super.handle(request);
 
@@ -46,12 +48,16 @@ public class IPHeaderHandler extends BaseRequestHandler<Void, Void> {
             String message = "Request client IP is missing";
             response = HttpAdapterResponseBuilder.badRequest(message);
             logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), message));
+
+        } catch (Exception ex) {
+            response = HttpAdapterResponseBuilder.internalServerError();
+            logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));
         }
 
         return response;
     }
 
-    private List<String> getXForwardedForHeader(RequestDTO<Void> request) {
+    private List<String> getXForwardedForHeader(RequestDTO<T> request) {
         return request.getRequestEntity().getHeaders().get("X-Forwarded-For");
     }
 

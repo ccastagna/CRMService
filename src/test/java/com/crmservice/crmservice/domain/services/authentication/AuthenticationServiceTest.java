@@ -70,7 +70,7 @@ class AuthenticationServiceTest {
 
         assertThatExceptionOfType(DomainClientException.class)
                 .isThrownBy(() -> this.authenticationService.authenticateCredentials(this.user, this.loginRequest))
-                .withMessage(DomainErrorResponse.MALFORMED_USERNAME.getMessage());
+                .withMessage(DomainErrorResponse.INVALID_USERNAME_CREDENTIAL.getMessage());
 
         verify(this.userCredentialsValidator)
                 .isRequestUsernameValid(this.user.getUsername(), this.loginRequest.getRequestUsername());
@@ -87,7 +87,7 @@ class AuthenticationServiceTest {
 
         assertThatExceptionOfType(DomainClientException.class)
                 .isThrownBy(() -> this.authenticationService.authenticateCredentials(this.user, this.loginRequest))
-                .withMessage(DomainErrorResponse.MALFORMED_PASSWORD.getMessage());
+                .withMessage(DomainErrorResponse.INVALID_PASSWORD_CREDENTIAL.getMessage());
 
         verify(this.userCredentialsValidator)
                 .isRequestUsernameValid(this.user.getUsername(), this.loginRequest.getRequestUsername());

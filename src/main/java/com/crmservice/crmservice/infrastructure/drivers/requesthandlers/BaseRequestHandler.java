@@ -18,7 +18,7 @@ public abstract class BaseRequestHandler<T, R> implements IRequestHandler<T, R> 
     }
 
     @Override
-    public ResponseEntity<R> handle(RequestDTO<T> request) {
+    public ResponseEntity handle(RequestDTO<T> request) {
         return Optional.ofNullable(next)
                 .map(nextHandler -> nextHandler.handle(request))
                 .orElse(HttpAdapterResponseBuilder.noContent());

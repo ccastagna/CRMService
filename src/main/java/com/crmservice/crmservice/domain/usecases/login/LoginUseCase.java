@@ -31,8 +31,8 @@ public class LoginUseCase implements ILoginUseCase {
 
     public LoginResponse login(LoginRequest loginRequest) throws DomainClientException {
 
-        User user = this.userRepositoryService.getUserByUsername(loginRequest.getRequestUsername())
-                .orElseThrow(new DomainClientException(DomainErrorResponse.USERNAME_DOES_NOT_MATCH));
+        User user = this.userRepositoryService.getActiveUserByUsername(loginRequest.getRequestUsername())
+                .orElseThrow(new DomainClientException(DomainErrorResponse.INVALID_USERNAME_CREDENTIAL));
 
         checkUserIsAvailable(user);
 
@@ -40,7 +40,6 @@ public class LoginUseCase implements ILoginUseCase {
 
         String token = this.tokenService.create(
                 Map.of(
-                        "userId", user.getId(),
                         "ip", loginRequest.getIp(),
                         "role", user.getRole()
                 ));

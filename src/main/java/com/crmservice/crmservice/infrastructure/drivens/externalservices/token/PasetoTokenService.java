@@ -32,15 +32,15 @@ public class PasetoTokenService implements ITokenService {
         PasetoV2PublicBuilder tokenBuilder = Pasetos.V2.PUBLIC.builder()
                 .setPrivateKey(this.keyPair.getPrivate())
                 .setIssuedAt(now)
-                .setExpiration(now.plus(3, ChronoUnit.MINUTES));
+                .setExpiration(now.plus(8, ChronoUnit.HOURS));
 
         claims.forEach(tokenBuilder::claim);
 
         return tokenBuilder.compact();
     }
 
-
-    public Paseto validate(String token, Map<String, String> claimsRequired) throws DomainClientException {
+    @Override
+    public Paseto validate(String token, Map<String, String> claimsRequired) {
         Paseto result;
 
         try {
@@ -53,7 +53,7 @@ public class PasetoTokenService implements ITokenService {
                     .parse(token);
         } catch (PasetoException ex) {
             logger.error(ex.getMessage());
-            throw new DomainClientException(DomainErrorResponse.INVALID_ACCESS_TOKEN);
+            throw new SecurityException("Invalid access token");
         }
 
         return result;

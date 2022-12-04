@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public class RequestDTO<T> {
     private RequestEntity<T> requestEntity;
-    private Map<String, String> context;
+    private Map<RequestContextKey, String> context;
 
     public RequestDTO(RequestEntity<T> request) {
         this(request, new HashMap<>());
     }
 
-    public RequestDTO(RequestEntity<T> request, Map<String, String> context) {
+    public RequestDTO(RequestEntity<T> request, Map<RequestContextKey, String> context) {
         this.requestEntity = request;
         this.context = context;
     }
@@ -23,11 +23,11 @@ public class RequestDTO<T> {
         return requestEntity;
     }
 
-    public String getContext(String id) {
+    public String getContext(RequestContextKey id) {
         return this.context.get(id);
     }
 
-    public void setContext(String key, String value) {
+    public void setContext(RequestContextKey key, String value) {
         Optional.of(this.context)
                 .map(context -> context.put(key, value));
     }

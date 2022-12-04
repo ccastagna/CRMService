@@ -12,6 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_IP;
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_PASSWORD;
+import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey.REQUEST_USERNAME;
+
 public class LoginRequestHandler extends BaseRequestHandler<Void, LoginResponseDTO> {
 
     private final ILoginUseCase loginUseCase;
@@ -28,9 +32,9 @@ public class LoginRequestHandler extends BaseRequestHandler<Void, LoginResponseD
         ResponseEntity response;
 
         try {
-            String requestUsername = request.getContext("requestUsername");
-            String requestPassword = request.getContext("requestPassword");
-            String requestIP = request.getContext("requestIP");
+            String requestUsername = request.getContext(REQUEST_USERNAME);
+            String requestPassword = request.getContext(REQUEST_PASSWORD);
+            String requestIP = request.getContext(REQUEST_IP);
             LoginRequest loginRequest = new LoginRequest(requestUsername, requestPassword, requestIP);
             LoginResponse loginResponse = this.loginUseCase.login(loginRequest);
 

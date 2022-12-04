@@ -56,7 +56,6 @@ class LoginUseCaseTest {
         this.user = new User(USER_ID, USERNAME, USER_ENCODED_PASSWORD, ROOT, UserState.ACTIVE);
 
         when(this.tokenService.create(Map.of(
-                "userId", USER_ID,
                 "ip", USER_IP,
                 "role", ROOT
         ))).thenReturn(ACCESS_TOKEN);
@@ -74,10 +73,9 @@ class LoginUseCaseTest {
                 .matches(loginResponse ->
                         ACCESS_TOKEN.equals(loginResponse.token()), ACCESS_TOKEN);
 
-        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService).create(Map.of(
-                "userId", USER_ID,
                 "ip", USER_IP,
                 "role", ROOT));
     }
@@ -91,7 +89,7 @@ class LoginUseCaseTest {
                 .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
                 .withMessage(DomainErrorResponse.MALFORMED_USERNAME.getMessage());
 
-        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService, never()).create(any());
     }
@@ -103,9 +101,9 @@ class LoginUseCaseTest {
 
         assertThatExceptionOfType(DomainClientException.class)
                 .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
-                .withMessage(DomainErrorResponse.USERNAME_DOES_NOT_MATCH.getMessage());
+                .withMessage(DomainErrorResponse.INVALID_USERNAME_CREDENTIAL.getMessage());
 
-        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService, never()).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService, never()).create(any());
     }
@@ -119,7 +117,7 @@ class LoginUseCaseTest {
                 .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
                 .withMessage(DomainErrorResponse.MALFORMED_PASSWORD.getMessage());
 
-        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService, never()).create(any());
     }
@@ -133,7 +131,7 @@ class LoginUseCaseTest {
                 .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
                 .withMessage(DomainErrorResponse.TOO_MANY_LOGIN_ATTEMPTS.getMessage());
 
-        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService, never()).create(any());
     }
@@ -149,7 +147,7 @@ class LoginUseCaseTest {
                 .isThrownBy(() -> this.loginUseCase.login(this.loginRequest))
                 .withMessage(DomainErrorResponse.TOO_MANY_LOGIN_ATTEMPTS.getMessage());
 
-        verify(userRepositoryService).getUserByUsername(USERNAME);
+        verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService, never()).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService, never()).create(any());
     }
@@ -181,11 +179,11 @@ class LoginUseCaseTest {
     }
 
     private void givenExistentUser() {
-        when(this.userRepositoryService.getUserByUsername(USERNAME)).thenReturn(Optional.of(this.user));
+        when(this.userRepositoryService.getActiveUserByUsername(USERNAME)).thenReturn(Optional.of(this.user));
     }
 
     private void givenNonExistentUser() {
-        when(this.userRepositoryService.getUserByUsername(USERNAME)).thenReturn(Optional.empty());
+        when(this.userRepositoryService.getActiveUserByUsername(USERNAME)).thenReturn(Optional.empty());
     }
 
 }

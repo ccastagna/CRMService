@@ -6,6 +6,7 @@ import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.infrastructure.drivens.externalservices.token.PasetoTokenService;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.CounterRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.ICounterRepository;
+import com.crmservice.crmservice.infrastructure.drivens.repositories.IUserRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositoryservices.CounterRepositoryService;
 import com.crmservice.crmservice.infrastructure.drivens.repositoryservices.UserRepositoryService;
 import dev.paseto.jpaseto.Version;
@@ -47,8 +48,8 @@ public class InfrastructureDrivenConfiguration {
     }
 
     @Bean
-    IUserRepositoryService getUserRepositoryService() {
-        return new UserRepositoryService();
+    IUserRepositoryService getUserRepositoryService(@Autowired IUserRepository userRepository) {
+        return new UserRepositoryService(userRepository);
     }
 
     @Bean

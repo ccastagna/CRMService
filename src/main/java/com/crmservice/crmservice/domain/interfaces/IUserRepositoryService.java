@@ -5,5 +5,7 @@ import com.crmservice.crmservice.domain.entities.User;
 import java.util.Optional;
 
 public interface IUserRepositoryService {
-    Optional<User> getUserByUsername(String requestUsername);
+    Optional<User> getActiveUserByUsername(String requestUsername);
+
+    User createUser(User newUser);
 }

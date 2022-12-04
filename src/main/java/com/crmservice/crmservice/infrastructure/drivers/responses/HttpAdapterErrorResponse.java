@@ -7,10 +7,22 @@ import java.util.List;
 
 enum HttpAdapterErrorResponse {
 
+    //400
+    BAD_REQUEST(
+            HttpStatus.BAD_REQUEST,
+            List.of(
+                    DomainErrorResponse.MALFORMED_USERNAME,
+                    DomainErrorResponse.MALFORMED_PASSWORD),
+            "Bad Request."
+    ),
+
     //401
     UNAUTHORIZED_TOKEN(
             HttpStatus.UNAUTHORIZED,
-            List.of(DomainErrorResponse.INVALID_ACCESS_TOKEN),
+            List.of(
+                    DomainErrorResponse.INVALID_PASSWORD_CREDENTIAL,
+                    DomainErrorResponse.INVALID_USERNAME_CREDENTIAL
+            ),
             "Specified token does not match."
     ),
 
@@ -25,9 +37,7 @@ enum HttpAdapterErrorResponse {
     MALFORMED_EXPECTED_DATA(
             HttpStatus.UNPROCESSABLE_ENTITY,
             List.of(
-                    DomainErrorResponse.MALFORMED_USERNAME,
-                    DomainErrorResponse.MALFORMED_PASSWORD,
-                    DomainErrorResponse.USERNAME_DOES_NOT_MATCH
+                    DomainErrorResponse.ALREADY_EXISTENT_USER
             ),
             "Malformed expected data."
     ),

@@ -34,7 +34,7 @@ public class UserCredentialsValidator implements IUserCredentialsValidator {
     @Override
     public boolean isUsernameDuplicated(String name) {
         String notNullName = Optional.of(name).get();
-        return this.userRepositoryService.getUserByUsername(notNullName).isPresent();
+        return this.userRepositoryService.getActiveUserByUsername(notNullName).isPresent();
     }
 
     @Override

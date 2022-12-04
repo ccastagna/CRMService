@@ -105,7 +105,7 @@ class UserCredentialsValidatorTest {
     void givenExistentUsername_whenIsUsernameDuplicated_thenReturnTrue() {
         //given
         String validUsername = USERNAME_WITH_254_NON_SPECIAL_CHARACTERS;
-        when(userRepositoryService.getUserByUsername(validUsername))
+        when(userRepositoryService.getActiveUserByUsername(validUsername))
                 .thenReturn(Optional.of(new User(USER_ID, validUsername, ENCODED_PASSWORD, Role.ROOT, UserState.ACTIVE)));
 
         //when
@@ -119,7 +119,7 @@ class UserCredentialsValidatorTest {
     void givenNonExistentUsername_whenIsUsernameDuplicated_thenReturnFalse() {
         //given
         String validUsername = USERNAME_WITH_254_NON_SPECIAL_CHARACTERS;
-        when(userRepositoryService.getUserByUsername(validUsername)).thenReturn(Optional.empty());
+        when(userRepositoryService.getActiveUserByUsername(validUsername)).thenReturn(Optional.empty());
 
         //when
         boolean validationResult = this.userCredentialsValidator.isUsernameDuplicated(validUsername);

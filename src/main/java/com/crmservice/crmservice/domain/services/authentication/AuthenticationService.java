@@ -6,7 +6,6 @@ import com.crmservice.crmservice.domain.responses.DomainErrorResponse;
 import com.crmservice.crmservice.domain.services.attemptscounter.IAttemptsCounter;
 import com.crmservice.crmservice.domain.services.credentialsvalidators.IUserCredentialsValidator;
 import com.crmservice.crmservice.domain.usecases.login.LoginRequest;
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,8 +16,8 @@ public class AuthenticationService implements IAuthenticationService {
     private static final Integer INVALID_PASSWORD_EVENT_COUNTER_TTL_IN_SECONDS = 300;
     private static final Integer MAX_LOGIN_ATTEMPTS = 3;
 
-    private IUserCredentialsValidator userCredentialsValidator;
-    private IAttemptsCounter attemptsCounter;
+    private final IUserCredentialsValidator userCredentialsValidator;
+    private final IAttemptsCounter attemptsCounter;
 
     public AuthenticationService(IUserCredentialsValidator userCredentialsValidator,
                                  IAttemptsCounter attemptsCounter) {
@@ -31,12 +30,12 @@ public class AuthenticationService implements IAuthenticationService {
 
         if (!this.userCredentialsValidator.isRequestUsernameValid(user.getUsername(), loginRequest.getRequestUsername())) {
             incrementCredentialsErrorCounter(user.getId());
-            throw new DomainClientException(DomainErrorResponse.MALFORMED_USERNAME);
+            throw new DomainClientException(DomainErrorResponse.INVALID_USERNAME_CREDENTIAL);
         }
 
         if (!this.userCredentialsValidator.isRequestUserPasswordValid(user.getPassword(), loginRequest.getRequestPassword())) {
             incrementCredentialsErrorCounter(user.getId());
-            throw new DomainClientException(DomainErrorResponse.MALFORMED_PASSWORD);
+            throw new DomainClientException(DomainErrorResponse.INVALID_PASSWORD_CREDENTIAL);
         }
 
         this.attemptsCounter.reset(
@@ -50,8 +49,7 @@ public class AuthenticationService implements IAuthenticationService {
         Optional<Integer> invalidAttempts = this.attemptsCounter.get(user.getId().toString(), INVALID_CREDENTIALS_EVENT);
         return invalidAttempts
                 .filter(value -> value >= MAX_LOGIN_ATTEMPTS)
-                .map(value -> true)
-                .orElse(false);
+                .isPresent();
     }
 
     private void incrementCredentialsErrorCounter(UUID userId) throws DomainClientException {

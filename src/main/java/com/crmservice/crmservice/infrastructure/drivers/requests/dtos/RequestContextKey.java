@@ -6,5 +6,6 @@ public enum RequestContextKey {
     REQUEST_PASSWORD,
     USE_CASE,
     CURRENT_USER,
-    USERNAME_TO_DELETE
+    USERNAME_TO_DELETE,
+    USERNAME_TO_UPDATE
 }

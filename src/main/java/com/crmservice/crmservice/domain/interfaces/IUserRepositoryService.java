@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface IUserRepositoryService {
     Optional<User> getActiveUserByUsername(String requestUsername);
 
+    Optional<Object> getUserByUsername(String notNullName);
+
     User saveUser(User newUser);
 }

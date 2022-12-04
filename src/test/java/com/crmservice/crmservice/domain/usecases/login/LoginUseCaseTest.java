@@ -56,6 +56,7 @@ class LoginUseCaseTest {
         this.user = new User(USER_ID, USERNAME, USER_ENCODED_PASSWORD, ROOT, UserState.ACTIVE);
 
         when(this.tokenService.create(Map.of(
+                "username", USERNAME,
                 "ip", USER_IP,
                 "role", ROOT
         ))).thenReturn(ACCESS_TOKEN);
@@ -76,6 +77,7 @@ class LoginUseCaseTest {
         verify(userRepositoryService).getActiveUserByUsername(USERNAME);
         verify(authenticationService).authenticateCredentials(this.user, this.loginRequest);
         verify(tokenService).create(Map.of(
+                "username", USERNAME,
                 "ip", USER_IP,
                 "role", ROOT));
     }

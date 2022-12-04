@@ -23,7 +23,7 @@ public class DeleteUserController {
     public DeleteUserController(
             @Qualifier("IPHeaderHandler") IRequestHandler<Void, Void> ipHeaderHandler,
             @Qualifier("BearerAuthHeaderHandler") IRequestHandler<Void, Void> bearerAuthenticationHeaderHandler,
-            IRequestHandler<Void, Void> deleteUserRequestHandler
+            @Qualifier("DeleteUserRequestHandler") IRequestHandler<Void, Void> deleteUserRequestHandler
     ) {
         this.ipHeaderHandler = ipHeaderHandler;
         this.ipHeaderHandler

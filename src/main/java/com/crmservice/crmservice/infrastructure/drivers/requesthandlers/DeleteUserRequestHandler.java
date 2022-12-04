@@ -38,7 +38,7 @@ public class DeleteUserRequestHandler extends BaseRequestHandler<Void, Void> {
                 return HttpAdapterResponseBuilder.forbidden("It is forbidden to delete your own user");
             }
 
-            DeleteUserRequest deleteUserRequest = new DeleteUserRequest(currentUserUsername, usernameToDelete);
+            DeleteUserRequest deleteUserRequest = new DeleteUserRequest(usernameToDelete);
 
             this.deleteUserUseCase.deleteUser(deleteUserRequest);
 

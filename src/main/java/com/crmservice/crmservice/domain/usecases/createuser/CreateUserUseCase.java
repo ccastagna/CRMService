@@ -47,7 +47,7 @@ public class CreateUserUseCase implements ICreateUserUseCase {
         String encodedPassword = this.passwordEncoder.encode(password);
         User newUser = new User(userName, encodedPassword, createUserRequest.role());
 
-        User createdUser = this.userRepositoryService.createUser(newUser);
+        User createdUser = this.userRepositoryService.saveUser(newUser);
 
         return new CreateUserResponse(createdUser.getId(), createdUser.getUsername(), createdUser.getRole());
     }

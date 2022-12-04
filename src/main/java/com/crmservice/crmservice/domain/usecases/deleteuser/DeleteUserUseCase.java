@@ -1,6 +1,7 @@
 package com.crmservice.crmservice.domain.usecases.deleteuser;
 
 import com.crmservice.crmservice.domain.entities.User;
+import com.crmservice.crmservice.domain.enums.UserState;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.responses.DomainClientException;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
@@ -19,11 +20,17 @@ public class DeleteUserUseCase implements IDeleteUserUseCase {
     public void deleteUser(DeleteUserRequest deleteUserRequest) throws DomainClientException {
 
         String usernameToDelete = deleteUserRequest.usernameToDelete();
-        String currentUserUsername = deleteUserRequest.currentUserUsername();
 
         User userToDelete = this.userRepositoryService.getActiveUserByUsername(usernameToDelete)
                 .orElseThrow(new DomainClientException(USER_DOES_NOT_EXIST));
 
-        this.userRepositoryService.deleteUser(userToDelete, currentUserUsername);
+        User deletedUser = new User(
+                userToDelete.getId(),
+                userToDelete.getUsername(),
+                userToDelete.getPassword(),
+                userToDelete.getRole(),
+                UserState.DELETED);
+
+        this.userRepositoryService.saveUser(deletedUser);
     }
 }

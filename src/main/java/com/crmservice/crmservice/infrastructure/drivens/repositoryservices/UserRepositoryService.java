@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class UserRepositoryService implements IUserRepositoryService {
 
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
 
     public UserRepositoryService(IUserRepository userRepository) {
         this.userRepository = userRepository;
@@ -19,11 +19,12 @@ public class UserRepositoryService implements IUserRepositoryService {
     @Override
     public Optional<User> getActiveUserByUsername(String requestUsername) {
         return this.userRepository.findByUsername(requestUsername)
-                .filter(userDTO -> userDTO.state() == UserState.ACTIVE).map(userDTO -> userDTO.toEntity());
+                .filter(userDTO -> userDTO.state() == UserState.ACTIVE).map(UserRepositoryDTO::toEntity);
     }
 
     @Override
-    public User createUser(User newUser) {
+    public User saveUser(User newUser) {
         return this.userRepository.save(UserRepositoryDTO.from(newUser)).toEntity();
     }
+
 }

@@ -1,3 +1,3 @@
 package com.crmservice.crmservice.domain.usecases.deleteuser;
 
-public record DeleteUserRequest(String currentUserUsername, String usernameToDelete) {}
+public record DeleteUserRequest(String usernameToDelete) {}

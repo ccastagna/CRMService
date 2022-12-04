@@ -12,9 +12,11 @@ import com.crmservice.crmservice.domain.services.credentialsvalidators.UserCrede
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.deleteuser.DeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.login.LoginUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.updateuser.UpdateUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,6 +56,13 @@ public class DomainConfiguration {
                                             @Autowired PasswordEncoder passwordEncoder,
                                             @Autowired IUserRepositoryService userRepositoryService) {
         return new CreateUserUseCase(userCredentialsValidator, passwordEncoder, userRepositoryService);
+    }
+
+    @Bean
+    IUpdateUserUseCase getUpdateUserUseCase(@Autowired IUserCredentialsValidator userCredentialsValidator,
+                                            @Autowired PasswordEncoder passwordEncoder,
+                                            @Autowired IUserRepositoryService userRepositoryService) {
+        return new UpdateUserUseCase(userCredentialsValidator, passwordEncoder, userRepositoryService);
     }
 
     @Bean

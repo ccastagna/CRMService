@@ -23,6 +23,12 @@ public class UserRepositoryService implements IUserRepositoryService {
     }
 
     @Override
+    public Optional<Object> getUserByUsername(String requestUsername) {
+        return this.userRepository.findByUsername(requestUsername)
+                .map(UserRepositoryDTO::toEntity);
+    }
+
+    @Override
     public User saveUser(User newUser) {
         return this.userRepository.save(UserRepositoryDTO.from(newUser)).toEntity();
     }

@@ -40,6 +40,7 @@ public class LoginUseCase implements ILoginUseCase {
 
         String token = this.tokenService.create(
                 Map.of(
+                        "username", user.getUsername(),
                         "ip", loginRequest.getIp(),
                         "role", user.getRole()
                 ));

@@ -56,4 +56,4 @@ run (replacing the path):
 docker-compose --env-file "/Users/cristiancastagna/rviewerChallenges/CRMService/CRM/.env" up -d 
 ```
 
-#### IMPORT THIS [POSTMAN COLLECTION](CRM-Service.postman_collection.json)
+#### IMPORT THIS [POSTMAN COLLECTION](CRMService.postman_collection.json)

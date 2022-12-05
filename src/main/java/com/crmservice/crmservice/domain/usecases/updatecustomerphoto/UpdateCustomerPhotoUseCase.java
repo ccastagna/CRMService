@@ -37,7 +37,7 @@ public class UpdateCustomerPhotoUseCase implements IUpdateCustomerPhotoUseCase {
         return this.customerRepositoryService.saveCustomer(updatedCustomer);
     }
 
-    private Customer getUpdatedCustomer(String customerId, String photoUrl, String currentUser, Customer customerToUpdate) {
+    private Customer getUpdatedCustomer(String customerId, String currentUser, String photoUrl, Customer customerToUpdate) {
         return new Customer(
                 customerId,
                 customerToUpdate.getName(),

@@ -39,9 +39,10 @@ public class InfrastructureDrivenConfiguration {
 
     private static final int ENCODER_STRENGTH = 10;
     private static final String ENDPOINT_URL = "https://s3.us-east-1.amazonaws.com";
-    private static final String BUCKET_NAME = "crm-service-user";
+    private static final String BUCKET_NAME = "crm-service-bucket";
     private static final String ACCESS_KEY = "AKIATQ6I476KLCKJMHOV";
     private static final String SECRET_KEY = "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";
+    //TODO: move the constants to environment variables
 
     @Bean
     PasswordEncoder getBCryptEncoder() {

@@ -1,13 +1,16 @@
 package com.crmservice.crmservice.dependencyinjectors;
 
 import com.crmservice.crmservice.domain.interfaces.ICounterRepositoryService;
+import com.crmservice.crmservice.domain.interfaces.ICustomerRepositoryService;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.infrastructure.drivens.externalservices.token.PasetoTokenService;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.CounterRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.ICounterRepository;
+import com.crmservice.crmservice.infrastructure.drivens.repositories.ICustomerRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.IUserRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositoryservices.CounterRepositoryService;
+import com.crmservice.crmservice.infrastructure.drivens.repositoryservices.CustomerRepositoryService;
 import com.crmservice.crmservice.infrastructure.drivens.repositoryservices.UserRepositoryService;
 import dev.paseto.jpaseto.Version;
 import dev.paseto.jpaseto.lang.Keys;
@@ -50,6 +53,11 @@ public class InfrastructureDrivenConfiguration {
     @Bean
     IUserRepositoryService getUserRepositoryService(@Autowired IUserRepository userRepository) {
         return new UserRepositoryService(userRepository);
+    }
+
+    @Bean
+    ICustomerRepositoryService getCustomerRepositoryService(@Autowired ICustomerRepository customerRepository) {
+        return new CustomerRepositoryService(customerRepository);
     }
 
     @Bean

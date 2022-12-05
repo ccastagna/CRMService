@@ -57,6 +57,7 @@ public class UpdateUserUseCase implements IUpdateUserUseCase {
             throw new DomainClientException(MALFORMED_PASSWORD);
         }
     }
+
     private boolean safeboxPasswordIsUnsecure(String password) {
         return !userCredentialsValidator.isUserPasswordSecure(password);
     }

@@ -37,7 +37,8 @@ enum HttpAdapterErrorResponse {
     MALFORMED_EXPECTED_DATA(
             HttpStatus.UNPROCESSABLE_ENTITY,
             List.of(
-                    DomainErrorResponse.ALREADY_EXISTENT_USER
+                    DomainErrorResponse.ALREADY_EXISTENT_USER,
+                    DomainErrorResponse.ALREADY_EXISTENT_CUSTOMER
             ),
             "Malformed expected data."
     ),

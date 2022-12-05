@@ -4,4 +4,5 @@ import com.crmservice.crmservice.domain.enums.Role;
 
 import java.util.UUID;
 
-public record UpdateUserResponse(UUID id, String userName, Role role) {}
+public record UpdateUserResponse(UUID id, String userName, Role role) {
+}

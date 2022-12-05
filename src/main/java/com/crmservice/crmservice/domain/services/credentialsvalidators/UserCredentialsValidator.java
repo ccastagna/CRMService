@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class UserCredentialsValidator implements IUserCredentialsValidator {
 
-    private static final String VALID_NAME_REGEX = "[a-zA-Z0-9\s]{1,254}";
+    private static final String VALID_USERNAME_REGEX = "[a-zA-Z0-9\s]{1,254}";
 
     private static final String SECURE_PASSWORD_REGEX = "(?=.*[A-Z])" + // At least an uppercase letter
             "(?=.*[a-z])" + // At least a lowercase letter
@@ -27,7 +27,7 @@ public class UserCredentialsValidator implements IUserCredentialsValidator {
     @Override
     public boolean isUsernameValid(String name) {
         return Optional.ofNullable(name)
-                .map(notNullName -> notNullName.matches(VALID_NAME_REGEX))
+                .map(notNullName -> notNullName.matches(VALID_USERNAME_REGEX))
                 .orElse(false);
     }
 

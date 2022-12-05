@@ -1,6 +1,7 @@
 package com.crmservice.crmservice.dependencyinjectors;
 
 import com.crmservice.crmservice.domain.interfaces.ICounterRepositoryService;
+import com.crmservice.crmservice.domain.interfaces.ICustomerRepositoryService;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
 import com.crmservice.crmservice.domain.services.attemptscounter.AttemptsCounter;
@@ -9,9 +10,11 @@ import com.crmservice.crmservice.domain.services.authentication.AuthenticationSe
 import com.crmservice.crmservice.domain.services.authentication.IAuthenticationService;
 import com.crmservice.crmservice.domain.services.credentialsvalidators.IUserCredentialsValidator;
 import com.crmservice.crmservice.domain.services.credentialsvalidators.UserCredentialsValidator;
+import com.crmservice.crmservice.domain.usecases.createcustomer.CreateCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.deleteuser.DeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.getallusers.GetAllUsersUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.ICreateCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
@@ -31,7 +34,7 @@ public class DomainConfiguration {
 
     @Bean
     IUserCredentialsValidator getUserCredentialsValidator(@Autowired IUserRepositoryService userRepositoryService,
-                                                             @Autowired PasswordEncoder passwordEncoder) {
+                                                          @Autowired PasswordEncoder passwordEncoder) {
         return new UserCredentialsValidator(userRepositoryService, passwordEncoder);
     }
 
@@ -48,8 +51,8 @@ public class DomainConfiguration {
 
     @Bean
     ILoginUseCase getLoginUseCase(@Autowired IUserRepositoryService userRepositoryService,
-                                        @Autowired IAuthenticationService authenticationService,
-                                        @Autowired ITokenService tokenService) {
+                                  @Autowired IAuthenticationService authenticationService,
+                                  @Autowired ITokenService tokenService) {
         return new LoginUseCase(userRepositoryService, authenticationService, tokenService);
     }
 
@@ -75,5 +78,10 @@ public class DomainConfiguration {
     @Bean
     IGetAllUsersUseCase getGetAllUsersUseCase(@Autowired IUserRepositoryService userRepositoryService) {
         return new GetAllUsersUseCase(userRepositoryService);
+    }
+
+    @Bean
+    ICreateCustomerUseCase getCreateCustomerUseCase(@Autowired ICustomerRepositoryService customerRepositoryService) {
+        return new CreateCustomerUseCase(customerRepositoryService);
     }
 }

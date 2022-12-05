@@ -35,7 +35,7 @@ public class DeleteUserRequestHandler extends BaseRequestHandler<Void, Void> {
             String currentUserUsername = Optional.ofNullable(request.getContext(RequestContextKey.CURRENT_USER))
                     .orElseThrow();
 
-            if(usernameToDelete.equals(currentUserUsername) || usernameToDelete.equals(ROOT_USERNAME)) {
+            if (usernameToDelete.equals(currentUserUsername) || usernameToDelete.equals(ROOT_USERNAME)) {
                 return HttpAdapterResponseBuilder.forbidden("It is forbidden to delete the given user");
             }
 

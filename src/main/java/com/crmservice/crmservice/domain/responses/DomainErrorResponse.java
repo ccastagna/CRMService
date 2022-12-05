@@ -8,7 +8,8 @@ public enum DomainErrorResponse {
     MALFORMED_PASSWORD("Malformed Password."),
     TOO_MANY_LOGIN_ATTEMPTS("Too many login attempts."),
     INVALID_USERNAME_CREDENTIAL("Invalid username credential."),
-    INVALID_PASSWORD_CREDENTIAL("Invalid password credential.");
+    INVALID_PASSWORD_CREDENTIAL("Invalid password credential."),
+    ALREADY_EXISTENT_CUSTOMER("The specified customer already exists");
 
     private final String message;
 

@@ -17,6 +17,10 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.evaluateCustomerDocumentNumber;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.evaluateCustomerName;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.evaluateCustomerSurname;
+
 public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCustomerRequestDTO, CreateCustomerResponseDTO> {
 
     private final ICreateCustomerUseCase createCustomerUseCase;
@@ -33,15 +37,22 @@ public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCusto
         ResponseEntity response;
 
         try {
+            CreateCustomerRequestDTO createCustomerRequestDTO = getCreateCustomerRequestDTO(request);
+
+            evaluateRequestStringValues(createCustomerRequestDTO);
+
             String currentUser = Optional.of(request.getContext(RequestContextKey.CURRENT_USER)).orElseThrow();
-            CreateCustomerRequest createCustomerRequest = Optional.ofNullable(request.getRequestEntity().getBody())
-                    .map(createCustomerRequestDTO -> createCustomerRequestDTO.toCreateCustomerRequest(currentUser))
-                    .orElseThrow();
+
+            CreateCustomerRequest createCustomerRequest = createCustomerRequestDTO.toCreateCustomerRequest(currentUser);
 
             CreateCustomerResponse createCustomerResponse = this.createCustomerUseCase.createCustomer(createCustomerRequest);
 
             response = ResponseEntity.status(HttpStatus.CREATED)
                     .body(CreateCustomerResponseDTO.from(createCustomerResponse));
+
+        } catch (IllegalArgumentException ex) {
+            response = HttpAdapterResponseBuilder.badRequest(ex.getMessage());
+            logger.error(LogMessageBuilder.build(request.getRequestEntity(), ex.getMessage(), getStackTrace(ex.getStackTrace())));
 
         } catch (DomainClientException ex) {
             response = HttpAdapterResponseBuilder.fromDomainException(ex);
@@ -53,6 +64,18 @@ public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCusto
         }
 
         return response;
+    }
+
+    private void evaluateRequestStringValues(CreateCustomerRequestDTO createCustomerRequestDTO) {
+        evaluateCustomerName(createCustomerRequestDTO.name());
+        evaluateCustomerSurname(createCustomerRequestDTO.surname());
+        Optional.of(createCustomerRequestDTO.document())
+                .ifPresent(document -> evaluateCustomerDocumentNumber(document.number()));
+    }
+
+    private CreateCustomerRequestDTO getCreateCustomerRequestDTO(RequestDTO<CreateCustomerRequestDTO> request) {
+        return Optional.ofNullable(request.getRequestEntity().getBody())
+                .orElseThrow();
     }
 
 }

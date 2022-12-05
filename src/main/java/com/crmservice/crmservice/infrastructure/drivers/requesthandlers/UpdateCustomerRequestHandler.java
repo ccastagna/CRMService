@@ -43,8 +43,6 @@ public class UpdateCustomerRequestHandler extends BaseRequestHandler<UpdateCusto
 
             evaluateRequestStringValues(updateCustomerRequest);
 
-
-
             Customer updateCustomerResponse = this.updateCustomerUseCase.updateCustomer(updateCustomerRequest);
 
             response = ResponseEntity.ok()
@@ -70,10 +68,10 @@ public class UpdateCustomerRequestHandler extends BaseRequestHandler<UpdateCusto
         String name = updateCustomerRequest.name();
         String surname = updateCustomerRequest.surname();
         String customerId = updateCustomerRequest.customerId();
-        if (!isValidCustomerName(name)) {
+        if (name != null && !name.isBlank() && !isValidCustomerName(name)) {
             throw new IllegalArgumentException("Invalid customer name: " + name);
         }
-        if (!isValidCustomerSurname(surname)) {
+        if (surname != null && !surname.isBlank() && !isValidCustomerSurname(surname)) {
             throw new IllegalArgumentException("Invalid customer surname: " + surname);
         }
         if (!isValidCustomerId(customerId)) {

@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface ICustomerRepositoryService {
     Optional<Customer> getCustomerById(String customerId);
 
+    Optional<Customer> getActiveCustomerById(String customerId);
+
     Customer saveCustomer(Customer newCustomer);
 }

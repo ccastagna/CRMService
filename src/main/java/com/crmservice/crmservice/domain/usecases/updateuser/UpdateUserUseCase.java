@@ -33,7 +33,7 @@ public class UpdateUserUseCase implements IUpdateUserUseCase {
         String password = updateUserRequest.password();
         Role role = updateUserRequest.role();
 
-        User userToDelete = this.userRepositoryService.getActiveUserByUsername(usernameToUpdate)
+        User userToUpdate = this.userRepositoryService.getActiveUserByUsername(usernameToUpdate)
                 .orElseThrow(new DomainClientException(USER_DOES_NOT_EXIST));
 
         validatePassword(password);
@@ -41,8 +41,8 @@ public class UpdateUserUseCase implements IUpdateUserUseCase {
         String encodedPassword = this.passwordEncoder.encode(password);
 
         User updatedUser = new User(
-                userToDelete.getId(),
-                userToDelete.getUsername(),
+                userToUpdate.getId(),
+                userToUpdate.getUsername(),
                 encodedPassword,
                 role,
                 UserState.ACTIVE);

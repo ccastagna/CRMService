@@ -30,7 +30,7 @@ public class CreateUserUseCase implements ICreateUserUseCase {
 
         try {
             this.createUser(new CreateUserRequest("root", "@SecUre.P4$5", Role.ROOT));
-        }catch (DomainClientException ex) {
+        } catch (DomainClientException ex) {
             logger.warn(ex.getMessage());
         }
     }

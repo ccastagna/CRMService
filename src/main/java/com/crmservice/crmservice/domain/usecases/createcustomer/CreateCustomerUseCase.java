@@ -28,7 +28,7 @@ public class CreateCustomerUseCase implements ICreateCustomerUseCase {
 
         String customerId = getCustomerId(createCustomerRequest.document());
 
-        if(customerAlreadyExists(customerId)) {
+        if (customerAlreadyExists(customerId)) {
             throw new DomainClientException(DomainErrorResponse.ALREADY_EXISTENT_CUSTOMER);
         }
 

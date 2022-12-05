@@ -6,5 +6,6 @@ import com.crmservice.crmservice.domain.usecases.login.LoginRequest;
 
 public interface IAuthenticationService {
     void authenticateCredentials(User user, LoginRequest loginRequest) throws DomainClientException;
+
     Boolean isLoginLocked(User user);
 }

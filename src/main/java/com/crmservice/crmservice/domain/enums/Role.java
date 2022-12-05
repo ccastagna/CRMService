@@ -36,7 +36,7 @@ public enum Role {
         this.permissions = permissions;
     }
 
-    public Boolean hasPermissionsTo(UseCase useCase){
+    public Boolean hasPermissionsTo(UseCase useCase) {
         return this.permissions.contains(useCase);
     }
 }

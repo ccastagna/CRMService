@@ -1,5 +1,7 @@
 package com.crmservice.crmservice.infrastructure.drivers.requesthandlers;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Optional;
 
 public abstract class InputValueEvaluator {
@@ -34,5 +36,9 @@ public abstract class InputValueEvaluator {
         return Optional.ofNullable(customerId)
                 .map(notNullName -> notNullName.matches(VALID_CUSTOMER_ID_REGEX))
                 .orElse(false);
+    }
+
+    public static boolean isValidImageFormat(MultipartFile image) {
+        return Optional.ofNullable(image).isPresent();
     }
 }

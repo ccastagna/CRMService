@@ -1,9 +1,16 @@
 package com.crmservice.crmservice.dependencyinjectors;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.crmservice.crmservice.domain.interfaces.ICounterRepositoryService;
 import com.crmservice.crmservice.domain.interfaces.ICustomerRepositoryService;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.interfaces.IUserRepositoryService;
+import com.crmservice.crmservice.infrastructure.drivens.externalservices.s3.AmazonS3Service;
+import com.crmservice.crmservice.infrastructure.drivens.externalservices.s3.IAmazonS3Service;
 import com.crmservice.crmservice.infrastructure.drivens.externalservices.token.PasetoTokenService;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.CounterRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.ICounterRepository;
@@ -31,6 +38,10 @@ import java.security.SecureRandom;
 public class InfrastructureDrivenConfiguration {
 
     private static final int ENCODER_STRENGTH = 10;
+    private static final String ENDPOINT_URL = "https://s3.us-east-1.amazonaws.com";
+    private static final String BUCKET_NAME = "crm-service-user";
+    private static final String ACCESS_KEY = "AKIATQ6I476KLCKJMHOV";
+    private static final String SECRET_KEY = "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";
 
     @Bean
     PasswordEncoder getBCryptEncoder() {
@@ -38,9 +49,25 @@ public class InfrastructureDrivenConfiguration {
     }
 
     @Bean
+    public AmazonS3 getS3Client(){
+        BasicAWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
+
+        return AmazonS3ClientBuilder
+                .standard()
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withRegion(Regions.US_EAST_1)
+                .build();
+    }
+
+    @Bean
     ITokenService getTokenService() {
         KeyPair keyPair = Keys.keyPairFor(Version.V2);
         return new PasetoTokenService(keyPair);
+    }
+
+    @Bean
+    public IAmazonS3Service getAmazonS3Service(@Autowired AmazonS3 amazonS3Client) {
+        return new AmazonS3Service(amazonS3Client, BUCKET_NAME, ENDPOINT_URL);
     }
 
     @Bean
@@ -56,8 +83,9 @@ public class InfrastructureDrivenConfiguration {
     }
 
     @Bean
-    ICustomerRepositoryService getCustomerRepositoryService(@Autowired ICustomerRepository customerRepository) {
-        return new CustomerRepositoryService(customerRepository);
+    ICustomerRepositoryService getCustomerRepositoryService(@Autowired ICustomerRepository customerRepository,
+                                                            @Autowired IAmazonS3Service amazonS3Service) {
+        return new CustomerRepositoryService(customerRepository, amazonS3Service);
     }
 
     @Bean

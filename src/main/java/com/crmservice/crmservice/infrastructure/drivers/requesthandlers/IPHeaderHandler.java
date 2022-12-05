@@ -18,6 +18,7 @@ import static com.crmservice.crmservice.infrastructure.drivers.requests.dtos.Req
 public class IPHeaderHandler<T, R> extends BaseRequestHandler<T, R> {
 
     private final Logger logger = LoggerFactory.getLogger(IPHeaderHandler.class);
+    private static final String HEADER_NAME = "X-Forwarded-For";
     private static final String IPV4_REGEX =
             "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
                     "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
@@ -58,7 +59,11 @@ public class IPHeaderHandler<T, R> extends BaseRequestHandler<T, R> {
     }
 
     private List<String> getXForwardedForHeader(RequestDTO<T> request) {
-        return request.getRequestEntity().getHeaders().get("X-Forwarded-For");
+        return Optional.ofNullable(request.getRequestEntity())
+                .map(requestEntity -> requestEntity.getHeaders().get(HEADER_NAME))
+                .orElseGet(() -> List.of(
+                        request.getHttpServletRequest().getHeader(HEADER_NAME)
+                ));
     }
 
     private String extractClientIP(List<String> xForwardedForHeader) {

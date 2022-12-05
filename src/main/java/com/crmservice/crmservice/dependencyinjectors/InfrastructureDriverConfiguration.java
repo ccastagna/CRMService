@@ -7,6 +7,7 @@ import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BasicAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BearerAuthorizationHeaderHandler;
@@ -17,14 +18,17 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.GetAllUs
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IPHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.LoginRequestHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.UpdateCustomerRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.UpdateUserRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateCustomerRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateUserRequestDTO;
+import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.UpdateCustomerRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.UpdateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateCustomerResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateUserResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.GetAllUsersResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
+import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.UpdateCustomerResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.UpdateUserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,6 +83,13 @@ public class InfrastructureDriverConfiguration {
             @Autowired ICreateCustomerUseCase createCustomerUseCase
     ) {
         return new CreateCustomerRequestHandler(createCustomerUseCase);
+    }
+
+    @Bean
+    IRequestHandler<UpdateCustomerRequestDTO, UpdateCustomerResponseDTO> getUpdateCustomerRequestHandler(
+            @Autowired IUpdateCustomerUseCase updateCustomerUseCase
+    ) {
+        return new UpdateCustomerRequestHandler(updateCustomerUseCase);
     }
 
     @Bean

@@ -1,0 +1,517 @@
+{
+	"info": {
+		"_postman_id": "cfd1ee69-2abb-4cbc-9cd2-844ccd7ba275",
+		"name": "CRM Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CUSTOMERS",
+			"item": [
+				{
+					"name": "GET ALL CUSTOMERS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiTU9ERVJBVE9SIiwiaXAiOiIxMDUuMTAwLjEuMSIsImV4cCI6IjIwMjItMTItMDVUMTg6MzQ6MDYuNTM1NjEzMDI5WiIsImlhdCI6IjIwMjItMTItMDVUMTA6MzQ6MDYuNTM1NjEzMDI5WiIsInVzZXJuYW1lIjoiVXNlck5hbWUxIn0x2K4UUsDijyvB6LySUtpg7TMIAYDAlPczxJmORqTzP1HZz9b8sDbLOHwumvs3d2gGymIiVILYkPJFZ6xbidwE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8081/v1/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE CUSTOMER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiTU9ERVJBVE9SIiwiaXAiOiIxMDUuMTAwLjEuMSIsImV4cCI6IjIwMjItMTItMDVUMTc6NDQ6NTYuODU5NjU5MjVaIiwiaWF0IjoiMjAyMi0xMi0wNVQwOTo0NDo1Ni44NTk2NTkyNVoiLCJ1c2VybmFtZSI6IlVzZXJOYW1lMSJ9RYOzFqiNyOy6yyTMfGSaTzcI4K7hUTmSHK_8LwManowifesKS2Vv55lTeCHWaf5nipVkfHFe_SKIfAtgK_1pDw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8081/v1/customers/DNI:3453123512P",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"customers",
+								"DNI:3453123512P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CUSTOMER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiTU9ERVJBVE9SIiwiaXAiOiIxMDUuMTAwLjEuMSIsImV4cCI6IjIwMjItMTItMDVUMTg6MTI6MTkuOTI5NzMwMzQ5WiIsImlhdCI6IjIwMjItMTItMDVUMTA6MTI6MTkuOTI5NzMwMzQ5WiIsInVzZXJuYW1lIjoiVXNlck5hbWUxIn3tYT4GqoxzeM93jacVlaUDQ_rlGB293gJRHdoQPsRPRe6Vy0v7BRJ75IgvClSPPz2jgxIHOg9henPQ5G32cLQM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8081/v1/customers/DNI:3453123512A",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"customers",
+								"DNI:3453123512A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE CUSTOMER PHOTO",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiTU9ERVJBVE9SIiwiaXAiOiIxMDUuMTAwLjEuMSIsImV4cCI6IjIwMjItMTItMDZUMDA6MjQ6MDcuOTg2OTc4NDIyWiIsImlhdCI6IjIwMjItMTItMDVUMTY6MjQ6MDcuOTg2OTc4NDIyWiIsInVzZXJuYW1lIjoiVXNlck5hbWUxIn2DilqB-VAcBITgU-sviJYsdYLS1Nz8px5uv5v05qY3i80DuxpIOnEFm7jPjc7s-wYQImFVHxv66M2fdtpN34UL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; charset=utf-8",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/customers/DNI:3453123512A/photos",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"customers",
+								"DNI:3453123512A",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE CUSTOMER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiTU9ERVJBVE9SIiwiaXAiOiIxMDUuMTAwLjEuMSIsImV4cCI6IjIwMjItMTItMDVUMTA6Mjk6NDMuNjE1NDg2MTA3WiIsImlhdCI6IjIwMjItMTItMDVUMDI6Mjk6NDMuNjE1NDg2MTA3WiIsInVzZXJuYW1lIjoiVXNlck5hbWUxIn1tcxNlb1viTxr8Nmq42LuZCm3dJ4ugtULgGSVZEweNXCEc8MmdF49DC1noeNg3ELUohpXRtkd3Dt7NFfP5B10G",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"JUAN\",\n    \"surname\": \"PEREZ\",\n    \"document\": {\n        \"type\": \"DNI\",\n        \"number\": \"3453123512A\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE CUSTOMER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiTU9ERVJBVE9SIiwiaXAiOiIxMDUuMTAwLjEuMSIsImV4cCI6IjIwMjItMTItMDVUMjE6MjI6NDguMDc0NjQ0MjMyWiIsImlhdCI6IjIwMjItMTItMDVUMTM6MjI6NDguMDc0NjQ0MjMyWiIsInVzZXJuYW1lIjoiVXNlck5hbWUxIn3BU0gzxBJ-PYdaSgaZqb8bvIpwKr4GddAMe5bLhMFkHthCsp2NLIpP8CzouUPh73tIeV4OShWPha7jRaVTnK0L",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"PEPE\",\n    \"surname\": \"ASD\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/customers/DNI:3453123512A",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"customers",
+								"DNI:3453123512A"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "GET ALL USERS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiQURNSU4iLCJpcCI6IjEwNS4xMDAuMS4xIiwiZXhwIjoiMjAyMi0xMi0wNVQxMDowNjoyMS4xMDY2MzY2MzNaIiwiaWF0IjoiMjAyMi0xMi0wNVQwMjowNjoyMS4xMDY2MzY2MzNaIiwidXNlcm5hbWUiOiJUZXJtaW5hdG9yIn1ZN0ipXE2HfnX9DeJlIAa75bPtLuHST0C-5ha9xRJNCnhmWQZ1frTgypEVfAyjojGDRUGDZ7fi6dN5_rH5FUQD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8081/v1/users/",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE USER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiQURNSU4iLCJpcCI6IjEwNS4xMDAuMS4xIiwiZXhwIjoiMjAyMi0xMi0wNVQwNDoyMzozNS4zNjI3NTU0NzNaIiwiaWF0IjoiMjAyMi0xMi0wNFQyMDoyMzozNS4zNjI3NTU0NzNaIiwidXNlcm5hbWUiOiJUZXJtaW5hdG9yIn0FLKoJcH0s0cmMU27uexgMe0tGKQhXDMHG0Ft_NpUPHO5ZQIt7gHVZ6cIftlmgnpYi__50DXMemaOPYNFRLsgB",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"@SecUre.P4$5\",\n    \"role\": \"MODERATOR\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/users/UserName1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"users",
+								"UserName1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE USER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiQURNSU4iLCJpcCI6IjEwNS4xMDAuMS4xIiwiZXhwIjoiMjAyMi0xMi0wNVQwMjozMDowMi4yMDMyMzAxNjFaIiwiaWF0IjoiMjAyMi0xMi0wNFQxODozMDowMi4yMDMyMzAxNjFaIiwidXNlcm5hbWUiOiJUZXJtaW5hdG9yIn3KEA3G1uyfxzoT-teaNBfHGqWEWDOYOF5gr5_IYST7KqoxVPzHDQ_x0ku2wll3yX75QOhpo-u-iFK-s2HB_QcH",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8081/v1/users/UserName",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"users",
+								"UserName"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE USER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "v2.public.eyJyb2xlIjoiQURNSU4iLCJpcCI6IjEwNS4xMDAuMS4xIiwiZXhwIjoiMjAyMi0xMi0wNVQwNDoxNDozMC42OTUyNDgxOTNaIiwiaWF0IjoiMjAyMi0xMi0wNFQyMDoxNDozMC42OTUyNDgxOTNaIiwidXNlcm5hbWUiOiJUZXJtaW5hdG9yIn2EeZEItCgvRmbC911S6HQBJ4EbegHMn8MtWgi92o61rv9wor7Bl96qTokoi2Mr5n3eCDGkx7aJph0-UgYc2pYL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forwarded-For",
+								"value": "105.100.1.1",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"UserName\",\n    \"password\": \"@SecUre.P4$5\",\n    \"role\": \"ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LOGIN AS ROOT",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "root",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "@SecUre.P4$5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Forwarded-For",
+						"value": "105.100.1.1",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/v1/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Terminator",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "@SecUre.P4$5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Forwarded-For",
+						"value": "105.100.1.1",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/v1/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

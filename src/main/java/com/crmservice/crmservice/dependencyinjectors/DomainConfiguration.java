@@ -14,11 +14,13 @@ import com.crmservice.crmservice.domain.usecases.createcustomer.CreateCustomerUs
 import com.crmservice.crmservice.domain.usecases.createuser.CreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.deletecustomer.DeleteCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.deleteuser.DeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.getallcustomers.GetAllCustomersUseCase;
 import com.crmservice.crmservice.domain.usecases.getallusers.GetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.getcustomer.GetCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllCustomersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateCustomerUseCase;
@@ -104,5 +106,10 @@ public class DomainConfiguration {
     @Bean
     IGetCustomerUseCase getGetCustomerUseCase(@Autowired ICustomerRepositoryService customerRepositoryService) {
         return new GetCustomerUseCase(customerRepositoryService);
+    }
+
+    @Bean
+    IGetAllCustomersUseCase getGetAllCustomersUseCase(@Autowired ICustomerRepositoryService customerRepositoryService) {
+        return new GetAllCustomersUseCase(customerRepositoryService);
     }
 }

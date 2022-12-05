@@ -5,6 +5,7 @@ import com.crmservice.crmservice.domain.interfaces.ICustomerRepositoryService;
 import com.crmservice.crmservice.infrastructure.drivens.repositories.ICustomerRepository;
 import com.crmservice.crmservice.infrastructure.drivens.repositorydtos.CustomerRepositoryDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CustomerRepositoryService implements ICustomerRepositoryService {
@@ -31,5 +32,14 @@ public class CustomerRepositoryService implements ICustomerRepositoryService {
     @Override
     public Customer saveCustomer(Customer newCustomer) {
         return this.customerRepository.save(CustomerRepositoryDTO.from(newCustomer)).toEntity();
+    }
+
+    @Override
+    public List<Customer> getAllActiveCustomers() {
+        return this.customerRepository.findAll()
+                .stream()
+                .filter(CustomerRepositoryDTO::isNotDeleted)
+                .map(CustomerRepositoryDTO::toEntity)
+                .toList();
     }
 }

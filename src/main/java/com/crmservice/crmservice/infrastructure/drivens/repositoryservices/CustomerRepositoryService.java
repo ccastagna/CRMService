@@ -22,6 +22,13 @@ public class CustomerRepositoryService implements ICustomerRepositoryService {
     }
 
     @Override
+    public Optional<Customer> getActiveCustomerById(String customerId) {
+        return this.customerRepository.findById(customerId)
+                .filter(CustomerRepositoryDTO::isNotDeleted)
+                .map(CustomerRepositoryDTO::toEntity);
+    }
+
+    @Override
     public Customer saveCustomer(Customer newCustomer) {
         return this.customerRepository.save(CustomerRepositoryDTO.from(newCustomer)).toEntity();
     }

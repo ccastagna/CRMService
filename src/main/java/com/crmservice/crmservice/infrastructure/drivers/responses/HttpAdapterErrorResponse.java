@@ -33,6 +33,12 @@ enum HttpAdapterErrorResponse {
             "Requested User does not exist."
     ),
 
+    CUSTOMER_NOT_FOUND(
+            HttpStatus.NOT_FOUND,
+            List.of(DomainErrorResponse.CUSTOMER_DOES_NOT_EXIST),
+            "Requested Customer does not exist."
+    ),
+
     // 422
     MALFORMED_EXPECTED_DATA(
             HttpStatus.UNPROCESSABLE_ENTITY,

@@ -18,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isCustomerDocumentNumberValid;
-import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isCustomerNameValid;
-import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isCustomerSurnameValid;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isValidCustomerDocumentNumber;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isValidCustomerName;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isValidCustomerSurname;
 
 public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCustomerRequestDTO, CreateCustomerResponseDTO> {
 
@@ -73,13 +73,13 @@ public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCusto
         String documentNumber = Optional.of(createCustomerRequestDTO.document())
                 .map(DocumentRequestDTO::number)
                 .orElseThrow();
-        if (!isCustomerNameValid(name)) {
+        if (!isValidCustomerName(name)) {
             throw new IllegalArgumentException("Invalid customer name: " + name);
         }
-        if (!isCustomerSurnameValid(surname)) {
+        if (!isValidCustomerSurname(surname)) {
             throw new IllegalArgumentException("Invalid customer surname: " + surname);
         }
-        if (!isCustomerDocumentNumberValid(documentNumber)) {
+        if (!isValidCustomerDocumentNumber(documentNumber)) {
             throw new IllegalArgumentException("Invalid customer document number: " + documentNumber);
         }
     }

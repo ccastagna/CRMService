@@ -38,4 +38,8 @@ public record CustomerRepositoryDTO(String id, String name, String surname, Docu
                 state
         );
     }
+
+    public boolean isNotDeleted() {
+        return this.state != CustomerState.DELETED;
+    }
 }

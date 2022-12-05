@@ -6,6 +6,7 @@ import com.crmservice.crmservice.domain.usecases.interfaces.ICreateCustomerUseCa
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllCustomersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
@@ -17,6 +18,7 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateCu
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateUserRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.DeleteCustomerRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.DeleteUserRequestHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.GetAllCustomersRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.GetAllUsersRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.GetCustomerRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IPHeaderHandler;
@@ -30,6 +32,7 @@ import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.UpdateCust
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.UpdateUserRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateCustomerResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.CreateUserResponseDTO;
+import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.GetAllCustomersResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.GetAllUsersResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.GetCustomerResponseDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.dtos.LoginResponseDTO;
@@ -112,6 +115,14 @@ public class InfrastructureDriverConfiguration {
             @Autowired IGetCustomerUseCase getCustomerUseCase
     ) {
         return new GetCustomerRequestHandler(getCustomerUseCase);
+    }
+
+
+    @Bean
+    IRequestHandler<Void, GetAllCustomersResponseDTO> getGetAllCustomersRequestHandler(
+            @Autowired IGetAllCustomersUseCase getAllCustomersUseCase
+    ) {
+        return new GetAllCustomersRequestHandler(getAllCustomersUseCase);
     }
 
     @Bean

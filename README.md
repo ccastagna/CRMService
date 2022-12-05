@@ -13,7 +13,7 @@ Then, create a file called create-user.sh inside initdb.d with this content:
 mongo -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$rootAuthDatabase" "$MONGO_INITDB_DATABASE" --eval "db.createUser({ user: '$MONGO_DB_USERNAME', pwd: '$MONGO_DB_PASSWORD', roles: [{ role: 'dbOwner', db: '$MONGO_INITDB_DATABASE' }] })"
 ```
 
-Create a file called .env inside CRM with this content:
+Create a file called .env inside CRM with this content (replacing the paths):
 
 ```
 # host ports
@@ -44,14 +44,16 @@ Next, assemble the library JAR:
 
 ``./gradlew build``
 
-build the containers:
+build the containers (replacing the path):
 
 ``` 
 docker-compose --env-file "/Users/cristiancastagna/rviewerChallenges/CRMService/CRM/.env" build 
 ```
 
-run:
+run (replacing the path):
 
 ``` 
 docker-compose --env-file "/Users/cristiancastagna/rviewerChallenges/CRMService/CRM/.env" up -d 
 ```
+
+#### IMPORT THIS [POSTMAN COLLECTION](CRM-Service.postman_collection.json)

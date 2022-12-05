@@ -6,5 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface IRequestHandler<T, R> {
 
     IRequestHandler setNext(IRequestHandler handler);
+
     ResponseEntity<R> handle(RequestDTO<T> request);
 }

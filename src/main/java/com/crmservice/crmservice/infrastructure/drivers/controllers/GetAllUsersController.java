@@ -30,7 +30,7 @@ public class GetAllUsersController {
                 .setNext(getAllUsersRequestHandler);
     }
 
-    @GetMapping ("/v1/users")
+    @GetMapping("/v1/users")
     public ResponseEntity<GetAllUsersResponseDTO> createUser(RequestEntity<Void> request) {
         RequestDTO requestWithContext = new RequestDTO(request);
         requestWithContext.setContext(USE_CASE, UseCase.GET_ALL_USERS.name());

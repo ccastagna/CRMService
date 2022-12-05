@@ -26,6 +26,7 @@ public class BearerAuthorizationHeaderHandler<T, R> extends BaseRequestHandler<T
 
     private final Logger logger = LoggerFactory.getLogger(BearerAuthorizationHeaderHandler.class);
 
+    private static final String HEADER_NAME = "Authorization";
     private static final String BEARER_AUTHORIZATION_TYPE = "Bearer";
     private final ITokenService tokenService;
 
@@ -99,7 +100,11 @@ public class BearerAuthorizationHeaderHandler<T, R> extends BaseRequestHandler<T
     }
 
     private List<String> getAuthorizationHeader(RequestDTO<T> request) {
-        return request.getRequestEntity().getHeaders().get("Authorization");
+        return Optional.ofNullable(request.getRequestEntity())
+                .map(requestEntity -> requestEntity.getHeaders().get(HEADER_NAME))
+                .orElseGet(() -> List.of(
+                        request.getHttpServletRequest().getHeader(HEADER_NAME)
+                ));
     }
 
     private String parseBearerAuthorizationHeader(List<String> authorizationHeader) {

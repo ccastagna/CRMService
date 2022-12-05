@@ -23,12 +23,14 @@ import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllCustomersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetCustomerUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateCustomerPhotoUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IUpdateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.login.LoginUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
 import com.crmservice.crmservice.domain.usecases.updatecustomer.UpdateCustomerUseCase;
+import com.crmservice.crmservice.domain.usecases.updatecustomerphoto.UpdateCustomerPhotoUseCase;
 import com.crmservice.crmservice.domain.usecases.updateuser.UpdateUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -111,5 +113,10 @@ public class DomainConfiguration {
     @Bean
     IGetAllCustomersUseCase getGetAllCustomersUseCase(@Autowired ICustomerRepositoryService customerRepositoryService) {
         return new GetAllCustomersUseCase(customerRepositoryService);
+    }
+
+    @Bean
+    IUpdateCustomerPhotoUseCase getUpdateCustomerPhotoUseCase(@Autowired ICustomerRepositoryService customerRepositoryService) {
+        return new UpdateCustomerPhotoUseCase(customerRepositoryService);
     }
 }

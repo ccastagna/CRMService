@@ -54,5 +54,10 @@ public class HttpAdapterResponseBuilder {
                 .body(message);
     }
 
+    public static ResponseEntity unsupportedMediaType(String message) {
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+                .body(message);
+    }
+
 
 }

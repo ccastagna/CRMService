@@ -6,6 +6,7 @@ import com.crmservice.crmservice.domain.usecases.createcustomer.CreateCustomerRe
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateCustomerUseCase;
 import com.crmservice.crmservice.infrastructure.drivers.logs.LogMessageBuilder;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.CreateCustomerRequestDTO;
+import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.DocumentRequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestContextKey;
 import com.crmservice.crmservice.infrastructure.drivers.requests.dtos.RequestDTO;
 import com.crmservice.crmservice.infrastructure.drivers.responses.HttpAdapterResponseBuilder;
@@ -17,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.evaluateCustomerDocumentNumber;
-import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.evaluateCustomerName;
-import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.evaluateCustomerSurname;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isCustomerDocumentNumberValid;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isCustomerNameValid;
+import static com.crmservice.crmservice.infrastructure.drivers.requesthandlers.InputValueEvaluator.isCustomerSurnameValid;
 
 public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCustomerRequestDTO, CreateCustomerResponseDTO> {
 
@@ -67,10 +68,20 @@ public class CreateCustomerRequestHandler extends BaseRequestHandler<CreateCusto
     }
 
     private void evaluateRequestStringValues(CreateCustomerRequestDTO createCustomerRequestDTO) {
-        evaluateCustomerName(createCustomerRequestDTO.name());
-        evaluateCustomerSurname(createCustomerRequestDTO.surname());
-        Optional.of(createCustomerRequestDTO.document())
-                .ifPresent(document -> evaluateCustomerDocumentNumber(document.number()));
+        String name = createCustomerRequestDTO.name();
+        String surname = createCustomerRequestDTO.surname();
+        String documentNumber = Optional.of(createCustomerRequestDTO.document())
+                .map(DocumentRequestDTO::number)
+                .orElseThrow();
+        if (!isCustomerNameValid(name)) {
+            throw new IllegalArgumentException("Invalid customer name: " + name);
+        }
+        if (!isCustomerSurnameValid(surname)) {
+            throw new IllegalArgumentException("Invalid customer surname: " + surname);
+        }
+        if (!isCustomerDocumentNumberValid(documentNumber)) {
+            throw new IllegalArgumentException("Invalid customer document number: " + documentNumber);
+        }
     }
 
     private CreateCustomerRequestDTO getCreateCustomerRequestDTO(RequestDTO<CreateCustomerRequestDTO> request) {

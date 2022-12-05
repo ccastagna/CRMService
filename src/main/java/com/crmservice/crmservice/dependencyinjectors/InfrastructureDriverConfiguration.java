@@ -4,6 +4,7 @@ package com.crmservice.crmservice.dependencyinjectors;
 import com.crmservice.crmservice.domain.interfaces.ITokenService;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ICreateUserUseCase;
+import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteCustomerUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IDeleteUserUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.IGetAllUsersUseCase;
 import com.crmservice.crmservice.domain.usecases.interfaces.ILoginUseCase;
@@ -13,6 +14,7 @@ import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BasicAut
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.BearerAuthorizationHeaderHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateCustomerRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.CreateUserRequestHandler;
+import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.DeleteCustomerRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.DeleteUserRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.GetAllUsersRequestHandler;
 import com.crmservice.crmservice.infrastructure.drivers.requesthandlers.IPHeaderHandler;
@@ -90,6 +92,15 @@ public class InfrastructureDriverConfiguration {
             @Autowired IUpdateCustomerUseCase updateCustomerUseCase
     ) {
         return new UpdateCustomerRequestHandler(updateCustomerUseCase);
+    }
+
+
+    @Bean
+    @Qualifier("DeleteCustomerRequestHandler")
+    IRequestHandler<Void, Void> getDeleteCustomerRequestHandler(
+            @Autowired IDeleteCustomerUseCase deleteCustomerUseCase
+    ) {
+        return new DeleteCustomerRequestHandler(deleteCustomerUseCase);
     }
 
     @Bean

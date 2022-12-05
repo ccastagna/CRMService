@@ -22,6 +22,7 @@ import com.crmservice.crmservice.infrastructure.drivens.repositoryservices.UserR
 import dev.paseto.jpaseto.Version;
 import dev.paseto.jpaseto.lang.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -37,12 +38,16 @@ import java.security.SecureRandom;
 @Order(1)
 public class InfrastructureDrivenConfiguration {
 
+    @Value("${ENCODER_STRENGTH}")
     private static final int ENCODER_STRENGTH = 10;
-    private static final String ENDPOINT_URL = "https://s3.us-east-1.amazonaws.com";
-    private static final String BUCKET_NAME = "crm-service-bucket";
-    private static final String ACCESS_KEY = "AKIATQ6I476KLCKJMHOV";
-    private static final String SECRET_KEY = "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";
-    //TODO: move the constants to environment variables
+    @Value("${AWS_S3_ENDPOINT_URL}")
+    private String s3EndpointUrl;
+    @Value("${AWS_BUCKET_NAME}")
+    private String awsS3BucketName;
+    @Value("${AWS_ACCESS_KEY}")
+    private String accessKey;
+    @Value("${AWS_SECRET_KEY}")
+    private String secretKey ;
 
     @Bean
     PasswordEncoder getBCryptEncoder() {
@@ -51,7 +56,7 @@ public class InfrastructureDrivenConfiguration {
 
     @Bean
     public AmazonS3 getS3Client(){
-        BasicAWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
+        BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 
         return AmazonS3ClientBuilder
                 .standard()
@@ -68,7 +73,7 @@ public class InfrastructureDrivenConfiguration {
 
     @Bean
     public IAmazonS3Service getAmazonS3Service(@Autowired AmazonS3 amazonS3Client) {
-        return new AmazonS3Service(amazonS3Client, BUCKET_NAME, ENDPOINT_URL);
+        return new AmazonS3Service(amazonS3Client, awsS3BucketName, s3EndpointUrl);
     }
 
     @Bean
